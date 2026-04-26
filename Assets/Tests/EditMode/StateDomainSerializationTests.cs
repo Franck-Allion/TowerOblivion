@@ -117,14 +117,12 @@ namespace TowerOblivion.Tests.EditMode
             state.Flags.Add(new NarrativeFlagState
             {
                 FlagId = new NarrativeFlagId("flag.prometheus_contacted"),
-                Value = true,
-                Counter = 1
+                Value = true
             });
             state.Consequences.Add(new NarrativeFlagState
             {
                 FlagId = new NarrativeFlagId("consequence.spared_guardian"),
-                Value = true,
-                Counter = 0
+                Value = true
             });
             state.DiscoveredClueIds.Add(new ClueId("clue.burned_oath"));
             state.UnlockedMemoryIds.Add(new MemoryId("memory.first_death"));

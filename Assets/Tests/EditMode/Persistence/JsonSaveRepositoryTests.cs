@@ -47,8 +47,7 @@ namespace TowerOblivion.Tests.EditMode.Persistence
             snapshot.Narrative.Flags.Add(new NarrativeFlagState
             {
                 FlagId = new NarrativeFlagId("flag.prometheus_contacted"),
-                Value = true,
-                Counter = 1
+                Value = true
             });
 
             var saveResult = service.Save(SaveSlot.Primary, snapshot);

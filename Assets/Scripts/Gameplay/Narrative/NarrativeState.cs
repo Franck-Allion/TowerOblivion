@@ -10,6 +10,7 @@ namespace TowerOblivion.Gameplay.Narrative
         public ContentVersion ContentVersion { get; set; }
         public List<NarrativeFlagState> Flags { get; set; } = new List<NarrativeFlagState>();
         public List<NarrativeFlagState> Consequences { get; set; } = new List<NarrativeFlagState>();
+        public List<NarrativeCounterState> Counters { get; set; } = new List<NarrativeCounterState>();
         public List<ClueId> DiscoveredClueIds { get; set; } = new List<ClueId>();
         public List<MemoryId> UnlockedMemoryIds { get; set; } = new List<MemoryId>();
     }

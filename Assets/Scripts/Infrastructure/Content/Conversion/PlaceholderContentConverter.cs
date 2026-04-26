@@ -171,7 +171,10 @@ namespace TowerOblivion.Infrastructure.Content.Conversion
                 definitions.Add(new NarrativeEventContentDefinition(
                     new NarrativeEventId(source.Id),
                     source.DisplayNameKey,
-                    new NarrativeFlagId(source.RequiredFlagId)));
+                    new NarrativeFlagId(source.RequiredFlagId),
+                    source.RequiredFlagValue,
+                    new NarrativeFlagId(source.RequiredCounterId),
+                    source.RequiredCounterMinValue));
             }
 
             return definitions;

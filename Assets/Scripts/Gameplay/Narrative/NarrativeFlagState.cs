@@ -8,6 +8,5 @@ namespace TowerOblivion.Gameplay.Narrative
     {
         public NarrativeFlagId FlagId { get; set; }
         public bool Value { get; set; }
-        public int Counter { get; set; }
     }
 }
