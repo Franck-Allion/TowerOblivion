@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TowerOblivion.Core;
 
+using TowerOblivion.Gameplay.Content;
 namespace TowerOblivion.Gameplay.Combat
 {
     [Serializable]

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using TowerOblivion.Core;
+using TowerOblivion.Gameplay.Content;
+using TowerOblivion.Gameplay.Narrative;
 
 namespace TowerOblivion.Gameplay.Progression
 {

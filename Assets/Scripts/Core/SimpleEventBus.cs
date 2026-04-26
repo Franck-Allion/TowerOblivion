@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TowerOblivion.Core
 {
@@ -13,11 +12,10 @@ namespace TowerOblivion.Core
             var type = typeof(TEvent);
             if (_handlers.TryGetValue(type, out var handlers))
             {
-                // ToArray to allow unsubscription during iteration
-                var handlersCopy = handlers.ToArray();
-                foreach (var handler in handlersCopy)
+                // Iterate backwards to allow unsubscription during dispatch without allocation
+                for (var i = handlers.Count - 1; i >= 0; i--)
                 {
-                    handler(evt);
+                    handlers[i](evt);
                 }
             }
         }

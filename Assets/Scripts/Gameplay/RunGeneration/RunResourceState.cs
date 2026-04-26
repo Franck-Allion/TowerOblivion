@@ -1,6 +1,7 @@
 using System;
 using TowerOblivion.Core;
 
+using TowerOblivion.Gameplay.Progression;
 namespace TowerOblivion.Gameplay.RunGeneration
 {
     [Serializable]

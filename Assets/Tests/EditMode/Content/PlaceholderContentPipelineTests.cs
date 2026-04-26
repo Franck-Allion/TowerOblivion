@@ -2,12 +2,14 @@ using System;
 using NUnit.Framework;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay.Content;
+using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Infrastructure.Content;
 using TowerOblivion.Infrastructure.Content.Authoring;
 using TowerOblivion.Infrastructure.Content.Conversion;
 using TowerOblivion.Infrastructure.Content.Validation;
 using UnityEngine;
 
+using TowerOblivion.Gameplay.Progression;
 namespace TowerOblivion.Tests.EditMode.Content
 {
     public sealed class PlaceholderContentPipelineTests

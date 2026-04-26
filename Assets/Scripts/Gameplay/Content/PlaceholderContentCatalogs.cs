@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 
+using TowerOblivion.Gameplay.Narrative;
 namespace TowerOblivion.Gameplay.Content
 {
     public sealed class PlaceholderContentCatalogs
@@ -11,12 +12,12 @@ namespace TowerOblivion.Gameplay.Content
         public IReadOnlyList<NarrativeEventContentDefinition> NarrativeEventDefinitions { get; }
         public IReadOnlyList<ModifierContentDefinition> ModifierDefinitions { get; }
 
-        public IContentCatalog<TowerOblivion.Core.RoomId, RoomContentDefinition> Rooms { get; }
-        public IContentCatalog<TowerOblivion.Core.EncounterId, EncounterContentDefinition> Encounters { get; }
-        public IContentCatalog<TowerOblivion.Core.SouvenirId, SouvenirContentDefinition> Souvenirs { get; }
-        public IContentCatalog<TowerOblivion.Core.RewardId, RewardContentDefinition> Rewards { get; }
-        public IContentCatalog<TowerOblivion.Core.NarrativeEventId, NarrativeEventContentDefinition> NarrativeEvents { get; }
-        public IContentCatalog<TowerOblivion.Core.ModifierId, ModifierContentDefinition> Modifiers { get; }
+        public IContentCatalog<RoomId, RoomContentDefinition> Rooms { get; }
+        public IContentCatalog<EncounterId, EncounterContentDefinition> Encounters { get; }
+        public IContentCatalog<SouvenirId, SouvenirContentDefinition> Souvenirs { get; }
+        public IContentCatalog<RewardId, RewardContentDefinition> Rewards { get; }
+        public IContentCatalog<NarrativeEventId, NarrativeEventContentDefinition> NarrativeEvents { get; }
+        public IContentCatalog<ModifierId, ModifierContentDefinition> Modifiers { get; }
 
         public PlaceholderContentCatalogs(
             IReadOnlyList<RoomContentDefinition> roomDefinitions,
@@ -25,12 +26,12 @@ namespace TowerOblivion.Gameplay.Content
             IReadOnlyList<RewardContentDefinition> rewardDefinitions,
             IReadOnlyList<NarrativeEventContentDefinition> narrativeEventDefinitions,
             IReadOnlyList<ModifierContentDefinition> modifierDefinitions,
-            IContentCatalog<TowerOblivion.Core.RoomId, RoomContentDefinition> rooms,
-            IContentCatalog<TowerOblivion.Core.EncounterId, EncounterContentDefinition> encounters,
-            IContentCatalog<TowerOblivion.Core.SouvenirId, SouvenirContentDefinition> souvenirs,
-            IContentCatalog<TowerOblivion.Core.RewardId, RewardContentDefinition> rewards,
-            IContentCatalog<TowerOblivion.Core.NarrativeEventId, NarrativeEventContentDefinition> narrativeEvents,
-            IContentCatalog<TowerOblivion.Core.ModifierId, ModifierContentDefinition> modifiers)
+            IContentCatalog<RoomId, RoomContentDefinition> rooms,
+            IContentCatalog<EncounterId, EncounterContentDefinition> encounters,
+            IContentCatalog<SouvenirId, SouvenirContentDefinition> souvenirs,
+            IContentCatalog<RewardId, RewardContentDefinition> rewards,
+            IContentCatalog<NarrativeEventId, NarrativeEventContentDefinition> narrativeEvents,
+            IContentCatalog<ModifierId, ModifierContentDefinition> modifiers)
         {
             RoomDefinitions = roomDefinitions ?? new List<RoomContentDefinition>();
             EncounterDefinitions = encounterDefinitions ?? new List<EncounterContentDefinition>();

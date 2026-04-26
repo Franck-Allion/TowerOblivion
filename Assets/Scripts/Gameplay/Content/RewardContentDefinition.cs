@@ -1,5 +1,6 @@
 using TowerOblivion.Core;
 
+using TowerOblivion.Gameplay.Progression;
 namespace TowerOblivion.Gameplay.Content
 {
     public sealed class RewardContentDefinition

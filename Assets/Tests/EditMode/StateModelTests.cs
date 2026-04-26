@@ -8,6 +8,7 @@ using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Gameplay.Progression;
 using TowerOblivion.Gameplay.RunGeneration;
 using TowerOblivion.Infrastructure.Persistence;
+using TowerOblivion.Gameplay.Content;
 
 namespace TowerOblivion.Tests.EditMode
 {

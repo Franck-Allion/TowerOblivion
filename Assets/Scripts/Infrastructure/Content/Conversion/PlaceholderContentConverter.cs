@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using TowerOblivion.Core;
+using TowerOblivion.Gameplay.Combat;
 using TowerOblivion.Gameplay.Content;
+using TowerOblivion.Gameplay.Narrative;
+using TowerOblivion.Gameplay.Progression;
 using TowerOblivion.Infrastructure.Content.Authoring;
 
 namespace TowerOblivion.Infrastructure.Content.Conversion

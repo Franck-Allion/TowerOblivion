@@ -4,6 +4,7 @@ using NUnit.Framework;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay;
 using TowerOblivion.Gameplay.Content;
+using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Gameplay.RunGeneration;
 
 namespace TowerOblivion.Tests.EditMode.Exploration

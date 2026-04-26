@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TowerOblivion.Core;
 
+using TowerOblivion.Gameplay.Narrative;
 namespace TowerOblivion.Gameplay.Content
 {
     public sealed class RoomContentDefinition

@@ -1,9 +1,11 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using NUnit.Framework;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Gameplay.Persistence;
+using TowerOblivion.Gameplay.Content;
 using TowerOblivion.Gameplay.Progression;
 using TowerOblivion.Infrastructure.Persistence;
 

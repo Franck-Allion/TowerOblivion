@@ -5,6 +5,7 @@ using TowerOblivion.Gameplay.Persistence;
 using TowerOblivion.Gameplay.RunGeneration;
 using TowerOblivion.Infrastructure.Persistence;
 
+using TowerOblivion.Gameplay.Content;
 namespace TowerOblivion.Tests.EditMode.Persistence
 {
     public sealed class SaveValidationTests

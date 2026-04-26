@@ -6,12 +6,13 @@ using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Gameplay.Persistence;
 using TowerOblivion.Gameplay.Progression;
 
+using TowerOblivion.Gameplay.Content;
 namespace TowerOblivion.Infrastructure.Persistence
 {
     public sealed class SaveDataValidator
     {
         private readonly ContentVersion _currentVersion;
-        private static readonly Regex IdRegex = new Regex(@"^[a-z0-9]+(\.[a-z0-9_]+)*$", RegexOptions.Compiled);
+        private static readonly Regex IdRegex = new Regex(@"^[a-z0-9\-]+(\.[a-z0-9_\-]+)*$", RegexOptions.Compiled);
 
         public SaveDataValidator(ContentVersion currentVersion)
         {

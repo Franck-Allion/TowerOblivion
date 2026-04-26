@@ -6,6 +6,7 @@ using TMPro;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay;
 using TowerOblivion.Gameplay.Content;
+using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Presentation.RoomView;
 using UnityEngine;
 using UnityEngine.TestTools;
