@@ -1,6 +1,7 @@
 {
     "name": "TowerOblivion.Tests.EditMode",
-    "rootNamespace": "TowerOblivion.Tests.EditMode",
+    "rootNamespace": "TowerOblivion.Tests.EditMode", 
+
     "references": [
         "TowerOblivion.Core",
         "TowerOblivion.Gameplay",

@@ -1,6 +1,6 @@
 # Story 1.2: Create And Load Local Save
 
-Status: in-progress
+Status: done
 
 ## Story
 
@@ -38,10 +38,16 @@ so that progression can persist between sessions.
   - [x] Provide a simple callable path (service or bootstrap-safe entry) to create a default snapshot and load an existing snapshot.
   - [x] Keep this independent of menu/hub UI and scene flow details.
 
-- [ ] Add EditMode tests for save create/load baseline. (AC: 4, 6)
+- [x] Add EditMode tests for save create/load baseline. (AC: 4, 6)
   - [x] Verify snapshot roundtrip with representative `PlayerProfileState` + `NarrativeState` values.
   - [x] Verify load behavior for a missing file path returns a safe, explicit result (not crash).
-  - [ ] Verify tests run without scenes/prefabs/MonoBehaviours/Steam.
+  - [x] Verify tests run without scenes/prefabs/MonoBehaviours/Steam.
+
+### Review Findings
+
+- [x] [Review][Patch] Prevent save slot path traversal and enforce save-root containment [`Assets/Scripts/Infrastructure/Persistence/JsonSaveRepository.cs:83`]
+- [x] [Review][Patch] Align `SaveSlot` equality/hash semantics with case-insensitive slot storage [`Assets/Scripts/Gameplay/Persistence/SaveSlot.cs:17`]
+- [x] [Review][Patch] Add persistence tests for invalid slot handling and case-insensitive slot behavior [`Assets/Tests/EditMode/Persistence/JsonSaveRepositoryTests.cs:78`]
 
 ## Dev Notes
 
@@ -160,6 +166,8 @@ GPT-5 Codex
 - `dotnet build` compile check over Core/Gameplay/Infrastructure + EditMode tests passed with 0 warnings and 0 errors.
 - Unity batch EditMode test run was blocked because another Unity instance already had the project open:
   `Multiple Unity instances cannot open the same project.`
+- Unity MCP EditMode test run succeeded after review patches:
+  `total=14, passed=14, failed=0, skipped=0` (job `52582a8ec83841cb9cfa3b423039a82e`).
 
 ### Completion Notes List
 
@@ -167,7 +175,8 @@ GPT-5 Codex
 - Added minimal save composition path (`SaveSnapshotFactory`, `SaveService`) to create/load/save snapshots without UI coupling.
 - Added infrastructure assembly and local JSON repository implementation (`JsonSaveRepository`) using file-based JSON storage.
 - Added persistence EditMode tests for roundtrip and missing-file behavior.
-- Left story in-progress only because Unity EditMode suite execution could not be completed while the editor was open.
+- Resolved all code-review patch findings (slot path hardening, slot case semantics, and edge-case test coverage).
+- Verified EditMode suite passes via Unity MCP Test Runner.
 
 ### File List
 
@@ -187,3 +196,4 @@ GPT-5 Codex
 
 - 2026-04-26: Story created and context-completed for Epic 1 Story 2.
 - 2026-04-26: Implemented local save create/load foundation, infrastructure JSON repository, and baseline persistence tests.
+- 2026-04-26: Resolved Story 1.2 code-review patch findings and set story status to done.

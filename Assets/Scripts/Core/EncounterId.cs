@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct EncounterId : IEquatable<EncounterId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public EncounterId(string value)
         {

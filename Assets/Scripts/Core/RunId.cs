@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct RunId : IEquatable<RunId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public RunId(string value)
         {

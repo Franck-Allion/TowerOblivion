@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct ChapterMilestoneId : IEquatable<ChapterMilestoneId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public ChapterMilestoneId(string value)
         {

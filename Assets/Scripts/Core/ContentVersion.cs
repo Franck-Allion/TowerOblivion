@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct ContentVersion : IEquatable<ContentVersion>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public ContentVersion(string value)
         {

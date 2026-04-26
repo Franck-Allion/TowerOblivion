@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct RoomId : IEquatable<RoomId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public RoomId(string value)
         {

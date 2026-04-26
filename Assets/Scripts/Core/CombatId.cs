@@ -3,9 +3,9 @@ using System;
 namespace TowerOblivion.Core
 {
     [Serializable]
-    public struct CombatId : IEquatable<CombatId>
+    public readonly struct CombatId : IEquatable<CombatId>
     {
-        public string Value { get; set; }
+        public string Value { get; }
 
         public CombatId(string value)
         {

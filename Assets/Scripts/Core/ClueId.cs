@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct ClueId : IEquatable<ClueId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public ClueId(string value)
         {

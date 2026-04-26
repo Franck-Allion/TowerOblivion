@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct CurrencyId : IEquatable<CurrencyId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public CurrencyId(string value)
         {

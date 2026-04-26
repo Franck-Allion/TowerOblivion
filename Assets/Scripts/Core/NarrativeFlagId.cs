@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct NarrativeFlagId : IEquatable<NarrativeFlagId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public NarrativeFlagId(string value)
         {

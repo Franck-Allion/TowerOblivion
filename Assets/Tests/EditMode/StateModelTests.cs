@@ -1,14 +1,13 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Serialization;
 using NUnit.Framework;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay.Combat;
 using TowerOblivion.Gameplay.Narrative;
 using TowerOblivion.Gameplay.Progression;
 using TowerOblivion.Gameplay.RunGeneration;
+using TowerOblivion.Infrastructure.Persistence;
 
 namespace TowerOblivion.Tests.EditMode
 {
@@ -128,18 +127,7 @@ namespace TowerOblivion.Tests.EditMode
 
         private static T RoundTrip<T>(T value)
         {
-            var serializer = new XmlSerializer(typeof(T));
-
-            using (var writer = new StringWriter())
-            {
-                serializer.Serialize(writer, value);
-                string serialized = writer.ToString();
-
-                using (var reader = new StringReader(serialized))
-                {
-                    return (T)serializer.Deserialize(reader);
-                }
-            }
+            return JsonSerializationHelper.FromJson<T>(JsonSerializationHelper.ToJson(value));
         }
     }
 }

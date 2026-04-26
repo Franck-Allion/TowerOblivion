@@ -5,7 +5,7 @@ namespace TowerOblivion.Core
     [Serializable]
     public struct SettingsProfileId : IEquatable<SettingsProfileId>
     {
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         public SettingsProfileId(string value)
         {
