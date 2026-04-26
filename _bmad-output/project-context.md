@@ -194,6 +194,36 @@ This file contains critical rules and patterns that AI agents must follow when i
 - If a requested implementation conflicts with this file, surface the conflict before coding.
 - Update this file only when project architecture, scope, or implementation patterns intentionally change.
 
+## Unity MCP Usage Policy (Mandatory)
+
+When Unity MCP is available, use it whenever the task involves Unity editor/runtime state that cannot be reliably validated from files alone.
+
+Use Unity MCP for:
+
+- Scene/prefab wiring checks.
+- GameObject/component existence and references.
+- Serialized field values in assets.
+- Play Mode/Edit Mode validation inside Unity.
+- Unity console errors/warnings collection.
+- Asset import/setup verification (Input System, URP, Test Runner, etc.).
+
+Do not use Unity MCP for:
+
+- Pure C# domain logic review that is fully verifiable from source files.
+- Simple text/file edits where shell, git, and tests are sufficient.
+
+Execution rules:
+
+- Prefer local file analysis first.
+- If Unity state is required, call Unity MCP and report exact checks performed.
+- If Unity MCP is unavailable or fails, explicitly state what could not be verified.
+- Never claim Unity validation passed without evidence from Unity MCP or Unity Test Runner output.
+- Always separate `Verified` (observed via MCP/tests) from `Assumed` (not directly verified).
+
+Human-in-the-loop rule:
+
+- If a step requires manual Unity editor action (clicking UI, assigning references, creating assets, running playtests), explicitly mark `Human Action Required` and provide numbered step-by-step instructions.
+
 **For Humans:**
 
 - Keep this file focused on implementation-critical rules for agents.

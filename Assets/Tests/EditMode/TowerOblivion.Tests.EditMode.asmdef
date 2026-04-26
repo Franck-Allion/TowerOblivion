@@ -1,0 +1,21 @@
+{
+    "name": "TowerOblivion.Tests.EditMode",
+    "rootNamespace": "TowerOblivion.Tests.EditMode",
+    "references": [
+        "TowerOblivion.Core",
+        "TowerOblivion.Gameplay"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

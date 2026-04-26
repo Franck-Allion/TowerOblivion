@@ -1,0 +1,16 @@
+{
+    "name": "TowerOblivion.Gameplay",
+    "rootNamespace": "TowerOblivion.Gameplay",
+    "references": [
+        "TowerOblivion.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}
