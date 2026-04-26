@@ -3,7 +3,8 @@
     "rootNamespace": "TowerOblivion.Tests.EditMode",
     "references": [
         "TowerOblivion.Core",
-        "TowerOblivion.Gameplay"
+        "TowerOblivion.Gameplay",
+        "TowerOblivion.Infrastructure"
     ],
     "includePlatforms": [
         "Editor"

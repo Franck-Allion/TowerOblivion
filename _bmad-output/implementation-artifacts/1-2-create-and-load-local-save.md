@@ -1,6 +1,6 @@
 # Story 1.2: Create And Load Local Save
 
-Status: ready-for-dev
+Status: in-progress
 
 ## Story
 
@@ -20,27 +20,27 @@ so that progression can persist between sessions.
 
 ## Tasks / Subtasks
 
-- [ ] Define save snapshot contracts in Unity-free code. (AC: 1, 2)
-  - [ ] Add `SaveMetadata` with `SaveVersion`, `ContentVersion`, and `SavedAtUtc`.
-  - [ ] Add `SaveSnapshotV1` that stores persistent progression-focused state for MVP (`PlayerProfileState`, `NarrativeState`, and optional `RunState` reference if present).
-  - [ ] Keep snapshot contracts free of `UnityEngine`, MonoBehaviours, ScriptableObjects, and scene references.
+- [x] Define save snapshot contracts in Unity-free code. (AC: 1, 2)
+  - [x] Add `SaveMetadata` with `SaveVersion`, `ContentVersion`, and `SavedAtUtc`.
+  - [x] Add `SaveSnapshotV1` that stores persistent progression-focused state for MVP (`PlayerProfileState`, `NarrativeState`, and optional `RunState` reference if present).
+  - [x] Keep snapshot contracts free of `UnityEngine`, MonoBehaviours, ScriptableObjects, and scene references.
 
-- [ ] Introduce persistence ports at the gameplay boundary. (AC: 3, 4)
-  - [ ] Add minimal interfaces such as `ISaveRepository` and slot/value types in Unity-free code.
-  - [ ] Ensure gameplay/application callers depend on ports only, not concrete file IO classes.
+- [x] Introduce persistence ports at the gameplay boundary. (AC: 3, 4)
+  - [x] Add minimal interfaces such as `ISaveRepository` and slot/value types in Unity-free code.
+  - [x] Ensure gameplay/application callers depend on ports only, not concrete file IO classes.
 
-- [ ] Implement local JSON save repository in infrastructure. (AC: 3, 4, 5)
-  - [ ] Create `Infrastructure/Persistence` implementation for `Save` and `Load`.
-  - [ ] Use file-based JSON storage for local saves (not `PlayerPrefs`).
-  - [ ] Keep implementation small and MVP-safe: no migration/backups/corruption flow in this story.
+- [x] Implement local JSON save repository in infrastructure. (AC: 3, 4, 5)
+  - [x] Create `Infrastructure/Persistence` implementation for `Save` and `Load`.
+  - [x] Use file-based JSON storage for local saves (not `PlayerPrefs`).
+  - [x] Keep implementation small and MVP-safe: no migration/backups/corruption flow in this story.
 
-- [ ] Wire minimal composition path for save create/load usage without UI coupling. (AC: 4, 7)
-  - [ ] Provide a simple callable path (service or bootstrap-safe entry) to create a default snapshot and load an existing snapshot.
-  - [ ] Keep this independent of menu/hub UI and scene flow details.
+- [x] Wire minimal composition path for save create/load usage without UI coupling. (AC: 4, 7)
+  - [x] Provide a simple callable path (service or bootstrap-safe entry) to create a default snapshot and load an existing snapshot.
+  - [x] Keep this independent of menu/hub UI and scene flow details.
 
 - [ ] Add EditMode tests for save create/load baseline. (AC: 4, 6)
-  - [ ] Verify snapshot roundtrip with representative `PlayerProfileState` + `NarrativeState` values.
-  - [ ] Verify load behavior for a missing file path returns a safe, explicit result (not crash).
+  - [x] Verify snapshot roundtrip with representative `PlayerProfileState` + `NarrativeState` values.
+  - [x] Verify load behavior for a missing file path returns a safe, explicit result (not crash).
   - [ ] Verify tests run without scenes/prefabs/MonoBehaviours/Steam.
 
 ## Dev Notes
@@ -153,14 +153,37 @@ The developer must follow `_bmad-output/project-context.md` before coding. The m
 
 ### Agent Model Used
 
-To be filled during implementation.
+GPT-5 Codex
 
 ### Debug Log References
 
+- `dotnet build` compile check over Core/Gameplay/Infrastructure + EditMode tests passed with 0 warnings and 0 errors.
+- Unity batch EditMode test run was blocked because another Unity instance already had the project open:
+  `Multiple Unity instances cannot open the same project.`
+
 ### Completion Notes List
 
+- Added save snapshot contracts (`SaveMetadata`, `SaveSnapshotV1`) and persistence boundary types (`SaveSlot`, `SaveLoadResult`, `ISaveRepository`) in Unity-free gameplay code.
+- Added minimal save composition path (`SaveSnapshotFactory`, `SaveService`) to create/load/save snapshots without UI coupling.
+- Added infrastructure assembly and local JSON repository implementation (`JsonSaveRepository`) using file-based JSON storage.
+- Added persistence EditMode tests for roundtrip and missing-file behavior.
+- Left story in-progress only because Unity EditMode suite execution could not be completed while the editor was open.
+
 ### File List
+
+- Assets/Scripts/Gameplay/Persistence/ISaveRepository.cs
+- Assets/Scripts/Gameplay/Persistence/SaveLoadResult.cs
+- Assets/Scripts/Gameplay/Persistence/SaveMetadata.cs
+- Assets/Scripts/Gameplay/Persistence/SaveSlot.cs
+- Assets/Scripts/Gameplay/Persistence/SaveSnapshotFactory.cs
+- Assets/Scripts/Gameplay/Persistence/SaveSnapshotV1.cs
+- Assets/Scripts/Gameplay/Persistence/SaveService.cs
+- Assets/Scripts/Infrastructure/TowerOblivion.Infrastructure.asmdef
+- Assets/Scripts/Infrastructure/Persistence/JsonSaveRepository.cs
+- Assets/Tests/EditMode/TowerOblivion.Tests.EditMode.asmdef
+- Assets/Tests/EditMode/Persistence/JsonSaveRepositoryTests.cs
 
 ### Change Log
 
 - 2026-04-26: Story created and context-completed for Epic 1 Story 2.
+- 2026-04-26: Implemented local save create/load foundation, infrastructure JSON repository, and baseline persistence tests.
