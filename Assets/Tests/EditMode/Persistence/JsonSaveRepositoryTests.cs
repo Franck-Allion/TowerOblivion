@@ -12,11 +12,15 @@ namespace TowerOblivion.Tests.EditMode.Persistence
     public sealed class JsonSaveRepositoryTests
     {
         private string _temporaryDirectory;
+        private SaveDataValidator _validator;
+        private ContentVersion _contentVersion;
 
         [SetUp]
         public void SetUp()
         {
             _temporaryDirectory = Path.Combine(Path.GetTempPath(), "TowerOblivion_SaveTests", Guid.NewGuid().ToString("N"));
+            _contentVersion = new ContentVersion("content.0.1.0");
+            _validator = new SaveDataValidator(_contentVersion);
         }
 
         [TearDown]
@@ -31,12 +35,11 @@ namespace TowerOblivion.Tests.EditMode.Persistence
         [Test]
         public void SaveAndLoad_RoundTripsRepresentativeProfileAndNarrativeData()
         {
-            var repository = new JsonSaveRepository(_temporaryDirectory);
+            var repository = new JsonSaveRepository(_temporaryDirectory, _validator);
             var service = new SaveService(repository);
-            var contentVersion = new ContentVersion("content.0.1.0");
             var saveVersion = new SaveVersion(1);
 
-            var snapshot = service.CreateDefaultSnapshot(contentVersion, saveVersion, new DateTime(2026, 4, 26, 8, 30, 0, DateTimeKind.Utc));
+            var snapshot = service.CreateDefaultSnapshot(_contentVersion, saveVersion, new DateTime(2026, 4, 26, 8, 30, 0, DateTimeKind.Utc));
             snapshot.PlayerProfile.SettingsProfileId = new SettingsProfileId("settings.default");
             snapshot.PlayerProfile.UnlockedSouvenirIds.Add(new SouvenirId("souvenir.broken_laurel"));
             snapshot.PlayerProfile.Currencies.Add(new CurrencyAmountState
@@ -59,14 +62,14 @@ namespace TowerOblivion.Tests.EditMode.Persistence
             Assert.That(loadResult.Snapshot.PlayerProfile.UnlockedSouvenirIds.Count, Is.EqualTo(1));
             Assert.That(loadResult.Snapshot.PlayerProfile.Currencies[0].Amount, Is.EqualTo(7));
             Assert.That(loadResult.Snapshot.Narrative.Flags[0].FlagId.Value, Is.EqualTo("flag.prometheus_contacted"));
-            Assert.That(loadResult.Snapshot.Metadata.ContentVersion, Is.EqualTo(contentVersion));
+            Assert.That(loadResult.Snapshot.Metadata.ContentVersion, Is.EqualTo(_contentVersion));
             Assert.That(loadResult.Snapshot.Metadata.SaveVersion, Is.EqualTo(saveVersion));
         }
 
         [Test]
         public void Load_MissingFile_ReturnsExplicitNotFoundResult()
         {
-            var repository = new JsonSaveRepository(_temporaryDirectory);
+            var repository = new JsonSaveRepository(_temporaryDirectory, _validator);
             var loadResult = repository.Load(new SaveSlot("profile_a"));
 
             Assert.That(loadResult.Result.IsFailure, Is.True);
@@ -77,9 +80,9 @@ namespace TowerOblivion.Tests.EditMode.Persistence
         [Test]
         public void SaveAndLoad_InvalidSlot_ReturnsExplicitInvalidSlotResult()
         {
-            var repository = new JsonSaveRepository(_temporaryDirectory);
+            var repository = new JsonSaveRepository(_temporaryDirectory, _validator);
             var snapshot = SaveSnapshotFactory.CreateDefault(
-                new ContentVersion("content.0.1.0"),
+                _contentVersion,
                 new SaveVersion(1),
                 new DateTime(2026, 4, 26, 8, 30, 0, DateTimeKind.Utc));
             var invalidSlot = new SaveSlot("../outside");
@@ -97,9 +100,9 @@ namespace TowerOblivion.Tests.EditMode.Persistence
         [Test]
         public void SaveAndLoad_SlotNameMatching_IsCaseInsensitive()
         {
-            var repository = new JsonSaveRepository(_temporaryDirectory);
+            var repository = new JsonSaveRepository(_temporaryDirectory, _validator);
             var snapshot = SaveSnapshotFactory.CreateDefault(
-                new ContentVersion("content.0.1.0"),
+                _contentVersion,
                 new SaveVersion(1),
                 new DateTime(2026, 4, 26, 8, 30, 0, DateTimeKind.Utc));
             var upperCaseSlot = new SaveSlot("Profile_A");
@@ -111,6 +114,49 @@ namespace TowerOblivion.Tests.EditMode.Persistence
             Assert.That(saveResult.IsSuccess, Is.True);
             Assert.That(loadResult.Result.IsSuccess, Is.True);
             Assert.That(loadResult.HasSnapshot, Is.True);
+        }
+
+        [Test]
+        public void Load_CorruptedData_ReturnsValidationError()
+        {
+            var repository = new JsonSaveRepository(_temporaryDirectory, _validator);
+            var slot = new SaveSlot("corrupt");
+            var path = Path.Combine(_temporaryDirectory, "corrupt.save.json");
+            
+            Directory.CreateDirectory(_temporaryDirectory);
+            // Valid JSON but invalid content (wrong version)
+            File.WriteAllText(path, "{\"Metadata\": {\"ContentVersion\": {\"Value\": \"invalid\"}, \"SaveVersion\": {\"Value\": 1}}}");
+
+            var result = repository.Load(slot);
+
+            Assert.That(result.Result.IsFailure, Is.True);
+            Assert.That(result.Result.ErrorCode, Is.EqualTo("save.incompatible_version"));
+        }
+
+        [Test]
+        public void Load_CorruptedPrimaryWithValidBackup_ReturnsBackupData()
+        {
+            var repository = new JsonSaveRepository(_temporaryDirectory, _validator);
+            var slot = new SaveSlot("fallback");
+            var primaryPath = Path.Combine(_temporaryDirectory, "fallback.save.json");
+            var backupPath = Path.Combine(_temporaryDirectory, "fallback.save.json.bak");
+            
+            Directory.CreateDirectory(_temporaryDirectory);
+            
+            // 1. Create a valid backup
+            var snapshot = SaveSnapshotFactory.CreateDefault(_contentVersion, new SaveVersion(1), DateTime.UtcNow);
+            snapshot.PlayerProfile.SettingsProfileId = new SettingsProfileId("settings.backup");
+            var json = JsonSerializationHelper.ToJson(snapshot);
+            File.WriteAllText(backupPath, json);
+
+            // 2. Create a corrupted primary
+            File.WriteAllText(primaryPath, "THIS IS CORRUPT JSON");
+
+            // 3. Load should fallback to backup
+            var result = repository.Load(slot);
+
+            Assert.That(result.Result.IsSuccess, Is.True);
+            Assert.That(result.Snapshot.PlayerProfile.SettingsProfileId.Value, Is.EqualTo("settings.backup"));
         }
 
         [Test]
