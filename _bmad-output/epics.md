@@ -1,4 +1,4 @@
-# Tower Oblivion - Development Epics
+Below all the epics to build the game : # Tower Oblivion - Development Epics
 
 ## Epic Overview
 
@@ -79,7 +79,9 @@ Validate the unique player-facing identity early: mythological room discovery, S
 - One consequence flag
 - Death/rebirth or run-resolution flow
 - Saved progression display
-- Essential room and combat readability
+- Placeholder UI shells for hub, room, reward, combat, and resolution
+- Placeholder visual assets for the hub, room, hotspot marker, Souvenir card/icon, combat board, and result/progression display
+- Essential room, reward, combat, and resolution readability
 
 **Excludes:**
 - Full combat system
@@ -87,6 +89,7 @@ Validate the unique player-facing identity early: mythological room discovery, S
 - Full progression tree
 - Chapter content volume
 - Final art/audio polish
+- Production art pipeline, asset provenance register, accessibility pass, and reusable feedback kit
 
 ### Dependencies
 
@@ -96,17 +99,36 @@ Epic 1.
 
 A short playable validation slice where the player starts in the hub, enters a room, discovers something, receives or selects a Souvenir, uses it in a thin 4x4 combat stub, sees a consequence, returns to the hub, and starts again with visible retained progression.
 
+### Placeholder UI and Asset Scope
+
+Epic 2 uses functional placeholder presentation only. The goal is to prove the player-facing loop is understandable, not to create final production art or a reusable presentation pipeline.
+
+Minimum UI/asset coverage:
+- Hub UI shell: start-run action, retained progression summary, and load/save status feedback.
+- Room UI shell: room image, hotspot marker, inspect prompt/result panel, and continue/reward action.
+- Reward UI shell: one Souvenir reward card or grant panel with placeholder icon, name, and short effect text.
+- Combat stub UI shell: 4x4 board, one placeable Souvenir, valid placement highlight, and result feedback.
+- Resolution UI shell: consequence summary, retained progression line, and return-to-hub action.
+
+Readability gates:
+- Primary actions are visible without reading logs.
+- The room hotspot is visually distinguishable from the background.
+- The Souvenir reward is understandable from one short label or tooltip.
+- The combat stub shows valid placement and result state.
+- Resolution shows what changed and what persisted.
+
 ### Stories
 
-- As a player, I can start from the rebirth hub so that the loop has a clear origin.
-- As a player, I can enter one mythological room so that the tower fantasy is visible.
-- As a player, I can inspect one meaningful discovery so that investigation matters.
-- As a player, I can receive or select one Souvenir so that discovery connects to build identity.
-- As a player, I can place one Souvenir in a thin 4x4 combat stub so that the board link is felt.
-- As a player, I can see basic combat feedback so that the result is understandable.
-- As a player, I can trigger one persistent consequence so that choices carry forward.
-- As a player, I can die or resolve the run and return to the hub so that rebirth is clear.
-- As a player, I can see retained progression so that failure feels meaningful.
+- As a player, I can launch the game and arrive in a placeholder rebirth hub so that the playable slice has a clear entry point.
+- As a developer, I can move through Hub, Room, Combat, Resolution, and back to Hub using explicit placeholder states so that the slice has a playable path.
+- As a developer, I can load the hub, room, encounter, Souvenir, consequence, and reward placeholders from data so that the slice is not hardcoded.
+- As a player, I can see a readable placeholder hub and one mythological room so that the tower fantasy is visible.
+- As a player, I can inspect one meaningful room hotspot so that investigation matters.
+- As a player, I can receive or select one Souvenir from the discovery so that exploration connects to build identity.
+- As a player, I can place one Souvenir in a minimal 4x4 combat stub so that the board connection is felt.
+- As a player, I can see the result of the combat stub and proceed to run resolution so that the outcome is understandable.
+- As a player, I can trigger one persistent consequence and see retained progression after returning to the hub so that failure feels meaningful.
+- As a developer, I can launch directly into Hub, Room, Combat, or Resolution so that testing the vertical slice is fast.
 
 ---
 
