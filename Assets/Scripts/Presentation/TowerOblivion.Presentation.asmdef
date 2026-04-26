@@ -1,0 +1,18 @@
+{
+    "name": "TowerOblivion.Presentation",
+    "rootNamespace": "TowerOblivion.Presentation",
+    "references": [
+        "TowerOblivion.Core",
+        "TowerOblivion.Gameplay",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

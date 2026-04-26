@@ -1,0 +1,23 @@
+{
+    "name": "TowerOblivion.Tests.PlayMode",
+    "rootNamespace": "TowerOblivion.Tests.PlayMode",
+    "references": [
+        "TowerOblivion.Core",
+        "TowerOblivion.Gameplay",
+        "TowerOblivion.Presentation",
+        "Unity.TextMeshPro",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

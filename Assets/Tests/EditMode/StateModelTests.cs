@@ -21,7 +21,7 @@ namespace TowerOblivion.Tests.EditMode
                 RunId = new RunId("run.test"),
                 Seed = new RunSeed(42),
                 CurrentFloorIndex = 1,
-                CurrentRoomId = new RoomId("room.floor_01.entry")
+                ActiveRoomId = new RoomId("room.floor_01.entry")
             };
             run.ActiveModifierIds.Add(new ModifierId("modifier.elite_trial"));
             run.TransientResources.Add(new RunResourceState
@@ -88,7 +88,7 @@ namespace TowerOblivion.Tests.EditMode
                 RunId = new RunId("run.roundtrip"),
                 Seed = new RunSeed(1234),
                 CurrentFloorIndex = 2,
-                CurrentRoomId = new RoomId("room.floor_02.shrine")
+                ActiveRoomId = new RoomId("room.floor_02.shrine")
             };
             original.ActiveModifierIds.Add(new ModifierId("modifier.dark_omen"));
 
@@ -97,7 +97,7 @@ namespace TowerOblivion.Tests.EditMode
             Assert.That(copy.RunId, Is.EqualTo(original.RunId));
             Assert.That(copy.Seed, Is.EqualTo(original.Seed));
             Assert.That(copy.CurrentFloorIndex, Is.EqualTo(original.CurrentFloorIndex));
-            Assert.That(copy.CurrentRoomId, Is.EqualTo(original.CurrentRoomId));
+            Assert.That(copy.ActiveRoomId, Is.EqualTo(original.ActiveRoomId));
             Assert.That(copy.ActiveModifierIds.Single(), Is.EqualTo(original.ActiveModifierIds.Single()));
         }
 

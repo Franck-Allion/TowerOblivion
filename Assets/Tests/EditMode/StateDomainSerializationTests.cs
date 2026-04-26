@@ -21,7 +21,7 @@ namespace TowerOblivion.Tests.EditMode
                 Seed = new RunSeed(12345),
                 ContentVersion = new ContentVersion("content.0.1.0"),
                 CurrentFloorIndex = 2,
-                CurrentRoomId = new RoomId("room.floor_02.entry"),
+                ActiveRoomId = new RoomId("room.floor_02.entry"),
                 TemporaryResourceAmount = 3
             };
             state.VisitedRoomIds.Add(new RoomId("room.floor_01.entry"));
@@ -37,7 +37,7 @@ namespace TowerOblivion.Tests.EditMode
             var roundtripped = RoundTrip(state);
 
             Assert.That(roundtripped.RunId, Is.EqualTo(state.RunId));
-            Assert.That(roundtripped.CurrentRoomId, Is.EqualTo(state.CurrentRoomId));
+            Assert.That(roundtripped.ActiveRoomId, Is.EqualTo(state.ActiveRoomId));
             Assert.That(roundtripped.ActiveModifiers[0].ModifierId, Is.EqualTo(state.ActiveModifiers[0].ModifierId));
             Assert.That(roundtripped.RunSouvenirIds[0], Is.EqualTo(state.RunSouvenirIds[0]));
         }

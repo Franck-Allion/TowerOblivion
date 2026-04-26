@@ -11,7 +11,7 @@ namespace TowerOblivion.Gameplay.RunGeneration
         public RunSeed Seed { get; set; }
         public ContentVersion ContentVersion { get; set; }
         public int CurrentFloorIndex { get; set; }
-        public RoomId CurrentRoomId { get; set; }
+        public RoomId ActiveRoomId { get; set; }
         public List<RoomId> VisitedRoomIds { get; set; } = new List<RoomId>();
         public List<EncounterId> CompletedEncounterIds { get; set; } = new List<EncounterId>();
         public List<ModifierId> ActiveModifierIds { get; set; } = new List<ModifierId>();
