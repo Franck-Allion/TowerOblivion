@@ -4,7 +4,9 @@
     "references": [
         "TowerOblivion.Core",
         "TowerOblivion.Gameplay",
-        "Unity.TextMeshPro"
+        "TowerOblivion.Infrastructure",
+        "Unity.TextMeshPro",
+        "Unity.Localization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

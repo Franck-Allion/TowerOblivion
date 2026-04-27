@@ -3,7 +3,9 @@
     "rootNamespace": "TowerOblivion.Infrastructure",
     "references": [
         "TowerOblivion.Core",
-        "TowerOblivion.Gameplay"
+        "TowerOblivion.Gameplay",
+        "Unity.Localization",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

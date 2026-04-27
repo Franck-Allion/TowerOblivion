@@ -12,6 +12,7 @@ namespace TowerOblivion.Gameplay.Progression
         public ContentVersion ContentVersion { get; set; }
         public SaveVersion SaveVersion { get; set; }
         public SettingsProfileId SettingsProfileId { get; set; }
+        public int Level { get; set; } = 1;
         public List<SouvenirId> UnlockedSouvenirIds { get; set; } = new List<SouvenirId>();
         public List<UpgradeTierState> UpgradeTiers { get; set; } = new List<UpgradeTierState>();
         public List<CurrencyAmountState> Currencies { get; set; } = new List<CurrencyAmountState>();

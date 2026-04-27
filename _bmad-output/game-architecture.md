@@ -87,7 +87,8 @@ The MVP must validate the link between discovery, Souvenir acquisition, board-ba
 
 ### Technical Requirements
 
-- 60 FPS target at 1080p on mid-tier PC hardware.
+- 60 FPS target at 1920x1080 (16:9) on mid-tier PC hardware.
+- Default Font: `Assets/Art/Fonts/Alata-Regular SDF.asset`.
 - 30 FPS minimum acceptable.
 - Mouse + keyboard and gamepad support.
 - Steam achievements for MVP.

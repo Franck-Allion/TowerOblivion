@@ -30,6 +30,7 @@ This file contains critical rules and patterns that AI agents must follow when i
 - Engine: Unity 6.3 LTS
 - Platform: PC / Steam
 - Rendering: Unity 2D + URP 2D
+- Default Font: `Assets/Art/Fonts/Alata-Regular SDF.asset`
 - Runtime UI: uGUI
 - Input: Unity Input System
 - Tests: Unity Test Framework, EditMode and PlayMode
@@ -70,7 +71,7 @@ This file contains critical rules and patterns that AI agents must follow when i
 
 ### Performance Rules
 
-- Target: 60 FPS at 1080p on mid-tier PC hardware; minimum acceptable is 30 FPS.
+- Target: 60 FPS at 1920x1080 (16:9) on mid-tier PC hardware; minimum acceptable is 30 FPS.
 - Frame-time target is ~16.7 ms at 60 FPS. Prioritize input responsiveness and readability over decorative effects.
 - Combat board feedback must stay readable under worst-case effect stacking. Difficulty should increase decision pressure, not visual confusion.
 - Avoid allocations in gameplay hot paths: combat resolution, card preview, board highlighting, input polling, reward generation, and room interaction scanning.
@@ -113,6 +114,13 @@ This file contains critical rules and patterns that AI agents must follow when i
 - Prefabs/scenes may reference views, adapters, installers, and serialized config references. Important runtime wiring should be in explicit composition roots, not hidden only in scenes.
 - Tests mirror ownership: EditMode for pure gameplay, content validation, converters, save serialization; PlayMode for Unity integration, scene wiring, UI flows, input adapters, prefab behavior.
 - Naming: C# files/classes use PascalCase; interfaces use `I` prefix; private fields use `_camelCase`; content IDs use lowercase dot/snake notation such as `souvenir.broken_laurel`.
+- Localization: All displayed text must use `LocalizedString`. UI translations are stored in the `UI` table under `Assets/Localization/UI` (Default Locales: en, fr, es).
+- Localization Naming Convention: Keys use `PascalCase` with dot notation for grouping, e.g., `Category.SubCategory.KeyName` (Example: `Hub.StartButton`, `Menu.Settings.Title`).
+- Technical Wiring for Localization: When using `LocalizeStringEvent` in Unity:
+    - Ensure `m_StringReference` points to the correct **String Table Collection** GUID (verify in Inspector).
+    - The `OnUpdateString` callback MUST be serialized in **Dynamic mode** (`m_Mode: 0`).
+    - Bind it to the `set_text` method of the `TextMeshProUGUI` component to ensure the translated string is passed correctly at runtime.
+    - Avoid "Static String" mode (`m_Mode: 5`) for these callbacks as it will overwrite the label with an empty string or a hardcoded value.
 - Use one public type per C# file unless there is a strong reason not to.
 - Event records should be plain C# records, not `UnityEvent`, and should be past-tense facts or explicit requests such as `CombatWon` or `EnterCombatRequested`.
 
@@ -196,33 +204,20 @@ This file contains critical rules and patterns that AI agents must follow when i
 
 ## Unity MCP Usage Policy (Mandatory)
 
-When Unity MCP is available, use it whenever the task involves Unity editor/runtime state that cannot be reliably validated from files alone.
+When Unity MCP is available, agents MUST use it to take full ownership of the Unity-side implementation. Manual instructions for the user are a last-resort fallback.
 
-Use Unity MCP for:
-
-- Scene/prefab wiring checks.
-- GameObject/component existence and references.
-- Serialized field values in assets.
-- Play Mode/Edit Mode validation inside Unity.
-- Unity console errors/warnings collection.
-- Asset import/setup verification (Input System, URP, Test Runner, etc.).
-
-Do not use Unity MCP for:
-
-- Pure C# domain logic review that is fully verifiable from source files.
-- Simple text/file edits where shell, git, and tests are sufficient.
+Mandatory uses for Unity MCP:
+- **Full Scene Setup**: Create GameObjects, hierarchy, and lighting for new features.
+- **Component Wiring**: Assign all serialized references, events, and Unity Event listeners.
+- **UI Polishing**: Use project-specific UI assets (e.g., Layer Lab) to create attractive, high-quality interfaces rather than bare placeholders.
+- **Runtime Verification**: Enter Play Mode to debug and verify logic, state persistence, and UI responsiveness.
+- **Asset Configuration**: Set up materials, fonts, and localization assets.
 
 Execution rules:
-
 - Prefer local file analysis first.
 - If Unity state is required, call Unity MCP and report exact checks performed.
-- If Unity MCP is unavailable or fails, explicitly state what could not be verified.
 - Never claim Unity validation passed without evidence from Unity MCP or Unity Test Runner output.
 - Always separate `Verified` (observed via MCP/tests) from `Assumed` (not directly verified).
-
-Human-in-the-loop rule:
-
-- If a step requires manual Unity editor action (clicking UI, assigning references, creating assets, running playtests), explicitly mark `Human Action Required` and provide numbered step-by-step instructions.
 
 **For Humans:**
 
