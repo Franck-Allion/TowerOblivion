@@ -2,7 +2,7 @@
 project_name: 'IA'
 game_name: 'Tower Oblivion'
 user_name: 'Franck'
-date: '2026-04-25'
+date: '2026-04-28'
 sections_completed: ['technology_stack', 'engine_rules', 'performance_rules', 'code_organization_rules', 'testing_rules', 'platform_build_rules', 'critical_dont_miss_rules']
 status: 'complete'
 rule_count: 113
@@ -219,6 +219,43 @@ Execution rules:
 - Never claim Unity validation passed without evidence from Unity MCP or Unity Test Runner output.
 - Always separate `Verified` (observed via MCP/tests) from `Assumed` (not directly verified).
 
+## Context7 MCP Usage Policy (Mandatory When Relevant)
+
+Context7 is available in Codex as the `context7` MCP server. Use it whenever current or version-specific external documentation would improve implementation accuracy.
+
+Mandatory uses for Context7:
+- Library, framework, SDK, API, Unity package, or tool usage questions.
+- Setup, configuration, migration, or upgrade steps.
+- Code generation that depends on third-party APIs or current package behavior.
+- Debugging errors where upstream docs, package behavior, examples, or configuration options may have changed.
+
+Execution rules:
+- Resolve the package or library name to a Context7 library ID first.
+- Fetch relevant documentation before giving implementation guidance or editing code that depends on that external API.
+- Prefer Context7 documentation over memory for modern dependencies.
+- If Context7 is unavailable or does not contain the needed library, state that briefly and use the next best source.
+- Do not use Context7 for purely local codebase questions, general C# syntax, or project-specific behavior that can be answered from repository files.
+
+## Nano Banana MCP Asset Generation Policy (Use When Assets Are Needed)
+
+Nano Banana image generation is available in Codex through the `mcp-image` MCP server. Use it to create prototype or production-candidate visual assets when generated imagery would unblock implementation, UX polish, concept validation, or placeholder replacement.
+
+Mandatory uses for `mcp-image`:
+- Generate temporary or prototype UI art, icons, illustrations, room art, combat concepts, or mood references when a feature needs visual assets to be usable.
+- Create consistent visual variants for game-specific assets after the desired style, aspect ratio, and in-game purpose are known.
+- Edit or refine existing generated/reference images when an asset needs a targeted visual change.
+- Produce assets directly into `Assets/Art/Generated` unless a more specific generated-art folder is intentionally created.
+
+Execution rules:
+- Use `mcp-image` for image generation/editing, then use Unity MCP for Unity import, assignment, scene wiring, and runtime verification when Unity state is involved.
+- Prefer explicit prompts that include game context, asset purpose, style constraints, aspect ratio, background/transparency needs, and whether text should be avoided.
+- For UI icons and gameplay-readable assets, request clean silhouettes, high contrast, no embedded text, and simple shapes that remain readable at small sizes.
+- Store generated outputs only under generated/prototype asset folders, not final curated art folders, until human review accepts them.
+- Record provenance for any generated asset that may ship: source tool/model if available, prompt summary, generation date, and intended usage/license review status.
+- Do not use AI-generated or purchased/generated assets in a shipping build without documented commercial-use rights and provenance.
+- Do not generate assets using living artists, named franchises, copyrighted characters, or "in the style of X."
+- If `mcp-image` is unavailable, state that clearly and proceed with placeholders or request human-provided art instead of blocking implementation.
+
 **For Humans:**
 
 - Keep this file focused on implementation-critical rules for agents.
@@ -226,4 +263,4 @@ Execution rules:
 - Remove or simplify rules only when they become obsolete or are enforced elsewhere.
 - Treat `_bmad-output/game-architecture.md` as the detailed source and this file as the compact implementation guide.
 
-Last Updated: 2026-04-25
+Last Updated: 2026-04-28
