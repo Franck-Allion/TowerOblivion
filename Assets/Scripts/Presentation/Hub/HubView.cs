@@ -37,6 +37,18 @@ namespace TowerOblivion.Presentation.Hub
             }
         }
 
+        public void SetStartButtonText(string text)
+        {
+            if (_startRunButton != null)
+            {
+                var label = _startRunButton.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+                if (label != null)
+                {
+                    label.text = text;
+                }
+            }
+        }
+
         // For testing without reflection
         public void Initialize(Button startRunButton, TextMeshProUGUI progressionSummaryLabel, TextMeshProUGUI saveStatusLabel)
         {

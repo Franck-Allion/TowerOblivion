@@ -6,7 +6,9 @@
         "TowerOblivion.Gameplay",
         "TowerOblivion.Infrastructure",
         "Unity.TextMeshPro",
-        "Unity.Localization"
+        "Unity.Localization",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:9e24947de15b9834991c9d8411ea37cf"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

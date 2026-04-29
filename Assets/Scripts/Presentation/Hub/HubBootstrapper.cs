@@ -17,6 +17,13 @@ namespace TowerOblivion.Presentation.Hub
         private HubStateOrchestrator _orchestrator;
         private IEventBus _eventBus;
 
+        private void Awake()
+        {
+            // AAA standard: Ensure localization is fully initialized before any OnEnable/Start
+            // to avoid English-to-translated flicker on the first frame.
+            UnityEngine.Localization.Settings.LocalizationSettings.InitializationOperation.WaitForCompletion();
+        }
+
         private void Start()
         {
             InitializeHub();

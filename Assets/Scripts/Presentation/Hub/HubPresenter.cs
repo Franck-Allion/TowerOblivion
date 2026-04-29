@@ -14,6 +14,7 @@ namespace TowerOblivion.Presentation.Hub
         
         [SerializeField] private LocalizedString _progressionString = new LocalizedString("UI", "Hub.Label.Progression");
         [SerializeField] private LocalizedString _saveStatusString = new LocalizedString("UI", "Hub.Label.SaveStatus");
+        [SerializeField] private LocalizedString _startButtonString = new LocalizedString("UI", "Hub.StartButton");
 
         private IEventBus _eventBus;
         private PlayerProfileState _profile;
@@ -38,10 +39,12 @@ namespace TowerOblivion.Presentation.Hub
 
                 _view.StartRunClicked += OnStartRunClicked;
                 
-                // Bind localized strings to view
+                // Bind localized strings to view for reactive updates (e.g. locale change)
                 _progressionString.StringChanged += _view.SetProgressionSummary;
                 _saveStatusString.StringChanged += _view.SetSaveStatus;
+                _startButtonString.StringChanged += _view.SetStartButtonText;
 
+                // Initial synchronous update
                 RefreshView();
             }
 
@@ -57,6 +60,7 @@ namespace TowerOblivion.Presentation.Hub
 
             _progressionString.StringChanged -= _view.SetProgressionSummary;
             _saveStatusString.StringChanged -= _view.SetSaveStatus;
+            _startButtonString.StringChanged -= _view.SetStartButtonText;
         }
 
         private void OnStartRunClicked()
@@ -69,8 +73,13 @@ namespace TowerOblivion.Presentation.Hub
         {
             PrepareLocalizationArguments();
 
-            _progressionString.RefreshString();
-            _saveStatusString.RefreshString();
+            // Synchronous update for the first display to meet AAA standards (no flicker)
+            if (_view != null)
+            {
+                _view.SetProgressionSummary(_progressionString.GetLocalizedStringAsync().WaitForCompletion());
+                _view.SetSaveStatus(_saveStatusString.GetLocalizedStringAsync().WaitForCompletion());
+                _view.SetStartButtonText(_startButtonString.GetLocalizedStringAsync().WaitForCompletion());
+            }
         }
 
         private void PrepareLocalizationArguments()
