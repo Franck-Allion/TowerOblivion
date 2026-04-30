@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "mcp-image": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mindstone-engineering/mcp-server-nano-banana"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  }
+}
