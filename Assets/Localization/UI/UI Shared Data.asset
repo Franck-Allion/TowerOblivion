@@ -27,6 +27,42 @@ MonoBehaviour:
     m_Key: Hub.Label.SaveStatus
     m_Metadata:
       m_Items: []
+  - m_Id: 1738800860168192
+    m_Key: Exploration.Button.Combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305536
+    m_Key: Combat.Button.Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305537
+    m_Key: Reward.Button.Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305538
+    m_Key: Reward.Label.Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305539
+    m_Key: Reward.Label.Effect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305540
+    m_Key: Resolution.Button.Hub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305541
+    m_Key: Resolution.Button.NextRoom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305542
+    m_Key: Resolution.Label.Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305543
+    m_Key: Resolution.Label.Progression
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

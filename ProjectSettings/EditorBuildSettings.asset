@@ -11,6 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rooms.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Combat.unity
+    guid: 8cfc627f4ed3fcb44936e4b17f66c143
+  - enabled: 1
+    path: Assets/Scenes/Reward.unity
+    guid: c5c50ca06c2c47c42a62c14873736646
+  - enabled: 1
+    path: Assets/Scenes/Resolution.unity
+    guid: 5927118748eb2ba4bbb9647c1eee76e6
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 73be5e331f3fb5347bf0110e4864ff33, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

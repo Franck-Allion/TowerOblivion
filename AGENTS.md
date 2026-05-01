@@ -16,4 +16,15 @@ When using Context7:
 - Prefer Context7 documentation over memory for modern dependencies.
 - If Context7 is unavailable or does not contain the needed library, state that briefly and use the next best source.
 
-Do not use Context7 for purely local codebase questions, general language syntax, or project-specific behavior that can be answered from repository files.
+- Do not use Context7 for purely local codebase questions, general language syntax, or project-specific behavior that can be answered from repository files.
+
+## Unity Naming Conventions
+
+All AI agents MUST adhere to the following conventions when creating or modifying Unity objects:
+
+- **GameObjects**: Use `PascalCase`. UI elements must use functional suffixes: `Button`, `Label`, `Text`, `Panel`, `Input`.
+- **UI Children**: Child TextMeshPro objects in buttons/containers should be named exactly `Text`.
+- **Localization**: Keys must use `PascalCase` with dot notation (e.g., `Category.SubCategory.KeyName`).
+- **Scene Integrity**: Never create scenes without a `Main Camera`, `Global Light 2D`, and `EventSystem`.
+- **Singletons**: Use the `GlobalBootstrapper` auto-creation pattern for accessing global services.
+

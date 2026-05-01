@@ -43,6 +43,42 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 5612205914013303517
+  - m_Id: 1738800860168192
+    m_Localized: GO TO COMBAT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305536
+    m_Localized: GO TO REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305537
+    m_Localized: CONTINUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305538
+    m_Localized: 'REWARD: Placeholder Souvenir'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305539
+    m_Localized: 'Effect: Adds +1 Curiosity.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305540
+    m_Localized: 'LOSE: RETURN HUB'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305541
+    m_Localized: 'WIN: NEXT ROOM'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305542
+    m_Localized: RUN RESOLUTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1738800906305543
+    m_Localized: 'Retained Progression: +10 XP'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

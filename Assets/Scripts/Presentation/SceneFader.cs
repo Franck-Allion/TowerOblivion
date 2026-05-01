@@ -21,6 +21,7 @@ namespace TowerOblivion.Presentation
 
         private static SceneFader _instance;
         private bool _isTransitioning;
+        public bool IsTransitioning => _isTransitioning;
 
         public static SceneFader Instance => _instance;
 

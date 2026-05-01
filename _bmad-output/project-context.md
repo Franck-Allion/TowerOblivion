@@ -124,6 +124,33 @@ This file contains critical rules and patterns that AI agents must follow when i
 - Use one public type per C# file unless there is a strong reason not to.
 - Event records should be plain C# records, not `UnityEvent`, and should be past-tense facts or explicit requests such as `CombatWon` or `EnterCombatRequested`.
 
+### Unity Naming Conventions (Mandatory for AI Agents)
+
+To ensure consistency and maintainability across AI-generated content, all Unity objects must follow these naming rules:
+
+#### 1. GameObjects & Hierarchy
+- **Scene Objects**: Use `PascalCase` (e.g., `MainCamera`, `EnvironmentContainer`, `PlayerSpawnPoint`).
+- **UI Components**: Use `PascalCase` with a functional suffix for primary interactive elements:
+    - Buttons: `[Name]Button` (e.g., `StartRunButton`, `CloseWindowButton`).
+    - Labels/Texts: `[Name]Label` or `[Name]Text` (e.g., `HealthLabel`, `DescriptionText`).
+    - Panels/Windows: `[Name]Panel` (e.g., `InventoryPanel`, `RewardOverlayPanel`).
+    - Input Fields: `[Name]Input` (e.g., `NameInput`).
+- **Standardized Child Text**: For buttons and simple containers, name the child TextMeshPro object simply `Text` (not `Text (TMP)` or `Label`).
+
+#### 2. Folders & Assets
+- **Folders**: Use `PascalCase` (e.g., `Art/Sprites/Environment`, `Scripts/Core`).
+- **Prefabs**: Use `PascalCase` matching the root GameObject name.
+- **Materials/Shaders**: Use `PascalCase` describing the intent (e.g., `UnlitTransparentGlow`).
+- **Textures/Sprites**: Use `snake_case` or `PascalCase` based on existing patterns, but prioritize descriptive names (e.g., `bg_hub_main`, `Icon_Sword_Gold`).
+
+#### 3. Localization Keys
+- **Dot Notation**: Use `PascalCase` with dots for grouping: `Category.SubCategory.KeyName`.
+- **Consistency**: The key should describe the *purpose*, not the *content* (e.g., `Menu.Button.Quit` instead of `Menu.Button.ExitGame`).
+
+#### 4. Serialization
+- **Private Fields**: Use `_camelCase` with the `[SerializeField]` attribute (e.g., `[SerializeField] private Button _confirmButton;`).
+- **Public Properties**: Use `PascalCase`.
+
 ### Testing Rules
 
 - Gameplay tests must run without Unity scenes, prefabs, MonoBehaviours, Steam, PlayerPrefs, Addressables, `UnityEngine.Random`, or `Time.time`.

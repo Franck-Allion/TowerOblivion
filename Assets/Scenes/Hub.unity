@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &47263264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 47263266}
+  - component: {fileID: 47263265}
+  m_Layer: 0
+  m_Name: GlobalBootstrapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &47263265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47263264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5683ad4ad5cfd4685fe9c079ed1f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: TowerOblivion.Presentation::TowerOblivion.Presentation.GlobalBootstrapper
+--- !u!4 &47263266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47263264}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &214569946
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +880,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: TowerOblivion.Presentation::TowerOblivion.Presentation.Hub.HubBootstrapper
   _hubPresenter: {fileID: 420219675}
-  _sceneLoader: {fileID: 0}
 --- !u!1 &455412459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,6 +1199,7 @@ GameObject:
   - component: {fileID: 950856079}
   - component: {fileID: 950856081}
   - component: {fileID: 950856080}
+  - component: {fileID: 950856082}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1282,6 +1326,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950856078}
   m_CullTransparentMesh: 1
+--- !u!114 &950856082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950856078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Components.LocalizeStringEvent
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: UI
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: Hub.StartButton
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 950856080}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1295677035
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,7 +1722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -475.00003, y: 481.94}
+  m_AnchoredPosition: {x: -475, y: 481.94}
   m_SizeDelta: {x: -979.04, y: -1018.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1879487073
@@ -1687,3 +1771,4 @@ SceneRoots:
   - {fileID: 243286864}
   - {fileID: 710131407}
   - {fileID: 420219677}
+  - {fileID: 47263266}
