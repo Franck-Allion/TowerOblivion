@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe5683ad4ad5cfd4685fe9c079ed1f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: TowerOblivion.Presentation::TowerOblivion.Presentation.GlobalBootstrapper
+  _authoringSet: {fileID: 11400000, guid: c7a04307e523c9c47a75def54ae4eb0d, type: 2}
 --- !u!4 &47263266
 Transform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8651d2832f51ccc468b9616684496635, type: 3}
+  m_Name: Catalog
+  m_EditorClassIdentifier: TowerOblivion.Infrastructure::TowerOblivion.Infrastructure.Content.Conversion.PlaceholderContentAuthoringSet
+  _rooms:
+  - {fileID: 11400000, guid: 9940a5cce2a25614e9228229f867bed7, type: 2}
+  _encounters:
+  - {fileID: 11400000, guid: 44c86930d9889404990ccf2dc32977ed, type: 2}
+  _souvenirs:
+  - {fileID: 11400000, guid: a9761efe4482e88429f068b4eb25bd67, type: 2}
+  _rewards:
+  - {fileID: 11400000, guid: 0b809f9eb6cf3c14bb645ceccf1caab6, type: 2}
+  _narrativeEvents:
+  - {fileID: 11400000, guid: ad52e91dabf35c644b216760f30b96ac, type: 2}
+  _modifiers: []
