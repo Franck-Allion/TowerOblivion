@@ -5,13 +5,20 @@ namespace TowerOblivion.Infrastructure.Content.Authoring
     [CreateAssetMenu(fileName = "SouvenirAuthoring", menuName = "TowerOblivion/Content/Souvenir Authoring")]
     public sealed class SouvenirAuthoring : ScriptableObject
     {
-        [SerializeField] internal string _id;
+        [SerializeField] private string _id;
         public string Id => _id;
 
-        [SerializeField] internal string _displayNameKey;
+        [SerializeField] private string _displayNameKey;
         public string DisplayNameKey => _displayNameKey;
 
-        [SerializeField] internal int _baseLife;
+        [SerializeField] private int _baseLife;
         public int BaseLife => _baseLife;
+
+        internal void SetData(string id, string displayNameKey, int baseLife)
+        {
+            _id = id;
+            _displayNameKey = displayNameKey;
+            _baseLife = baseLife;
+        }
     }
 }

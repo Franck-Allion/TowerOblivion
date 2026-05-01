@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1738800906305539
-    m_Localized: 'Effect: Adds +1 Curiosity.'
+    m_Localized: 'Effect: +{0} {1}'
     m_Metadata:
       m_Items: []
   - m_Id: 1738800906305540
@@ -76,7 +76,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1738800906305543
-    m_Localized: 'Retained Progression: +10 XP'
+    m_Localized: 'Retained Progression: +{0} {1}'
     m_Metadata:
       m_Items: []
   references:

@@ -1,6 +1,6 @@
 # Story 2.3: Load Hub, Room, Encounter, Souvenir, Consequence, and Reward Placeholders from Data
 
-Status: ready-for-dev
+Status: review
 
 ## Story
 
@@ -28,51 +28,51 @@ so that the playable identity slice is not hardcoded.
 
 ## Tasks / Subtasks
 
-- [ ] Confirm and preserve existing content foundations. (AC: 1, 2, 3)
-  - [ ] Reuse existing content DTOs under `Assets/Scripts/Gameplay/Content` where present.
-  - [ ] Reuse or extend existing authoring/conversion/validation code under `Assets/Scripts/Infrastructure/Content`.
-  - [ ] Keep all Unity `ScriptableObject` usage in Infrastructure/Authoring or composition/bootstrap code, not Gameplay.
+- [x] Confirm and preserve existing content foundations. (AC: 1, 2, 3)
+  - [x] Reuse existing content DTOs under `Assets/Scripts/Gameplay/Content` where present.
+  - [x] Reuse or extend existing authoring/conversion/validation code under `Assets/Scripts/Infrastructure/Content`.
+  - [x] Keep all Unity `ScriptableObject` usage in Infrastructure/Authoring or composition/bootstrap code, not Gameplay.
 
-- [ ] Define the required placeholder fixture IDs and relationships. (AC: 1, 6, 7, 8, 9)
-  - [ ] Include one hub/default run entry reference if the current hub bootstrap needs it.
-  - [ ] Include one room, for example `room.entry`.
-  - [ ] Include one encounter, for example `encounter.entry`.
-  - [ ] Include one Souvenir, for example `souvenir.broken_laurel`.
-  - [ ] Include one consequence/narrative event, for example `narrative.prometheus_whisper`.
-  - [ ] Include one reward, for example `reward.memory_embers`.
-  - [ ] Include stable currency/flag IDs, for example `currency.memory_embers` and `flag.prometheus_contacted`.
+- [x] Define the required placeholder fixture IDs and relationships. (AC: 1, 6, 7, 8, 9)
+  - [x] Include one hub/default run entry reference if the current hub bootstrap needs it.
+  - [x] Include one room, for example `room.entry`.
+  - [x] Include one encounter, for example `encounter.entry`.
+  - [x] Include one Souvenir, for example `souvenir.broken_laurel`.
+  - [x] Include one consequence/narrative event, for example `narrative.prometheus_whisper`.
+  - [x] Include one reward, for example `reward.memory_embers`.
+  - [x] Include stable currency/flag IDs, for example `currency.memory_embers` and `flag.prometheus_contacted`.
 
-- [ ] Create or wire the placeholder data set. (AC: 1, 2, 5, 6, 7, 8)
-  - [ ] If using ScriptableObjects, place authored assets under `Assets/Data/Authoring`.
-  - [ ] If using an in-memory fixture for this slice, keep it in Infrastructure or bootstrap composition and make it replaceable by authoring assets later.
-  - [ ] Ensure converted runtime catalogs are immutable/read-only from Gameplay's perspective.
-  - [ ] Do not mutate ScriptableObject assets at runtime.
+- [x] Create or wire the placeholder data set. (AC: 1, 2, 5, 6, 7, 8)
+  - [x] If using ScriptableObjects, place authored assets under `Assets/Data/Authoring`.
+  - [x] If using an in-memory fixture for this slice, keep it in Infrastructure or bootstrap composition and make it replaceable by authoring assets later.
+  - [x] Ensure converted runtime catalogs are immutable/read-only from Gameplay's perspective.
+  - [x] Do not mutate ScriptableObject assets at runtime.
 
-- [ ] Validate content before gameplay flow begins. (AC: 6, 7, 8, 12)
-  - [ ] Check empty IDs, duplicate IDs, missing room -> encounter links, missing room -> narrative event links, missing encounter -> Souvenir links, missing encounter -> reward links, and invalid reward currency/amount.
-  - [ ] Return stable validation error codes such as `content.duplicate_id`, `content.missing_reference`, or `content.invalid_reward`.
-  - [ ] Block or visibly fail the slice startup if critical placeholder content is invalid.
+- [x] Validate content before gameplay flow begins. (AC: 6, 7, 8, 12)
+  - [x] Check empty IDs, duplicate IDs, missing room -> encounter links, missing room -> narrative event links, missing encounter -> Souvenir links, missing encounter -> reward links, and invalid reward currency/amount.
+  - [x] Return stable validation error codes such as `content.duplicate_id`, `content.missing_reference`, or `content.invalid_reward`.
+  - [x] Block or visibly fail the slice startup if critical placeholder content is invalid.
 
-- [ ] Wire data-backed loading into the existing loop. (AC: 4, 5, 10, 11)
-  - [ ] Keep `GameStateOrchestrator` as the mode-transition owner from Story 2.2.
-  - [ ] Keep `HubStateOrchestrator` responsible for hub entry/run-start behavior from Story 2.1.
-  - [ ] Load the configured room through `RoomStateOrchestrator` / `IRoomLoader` / `RoomLoaded` instead of presentation-only hardcoding.
-  - [ ] Start the combat stub from the configured encounter/Souvenir data, but keep combat rules minimal.
-  - [ ] Populate reward/resolution placeholder labels from data where practical; use readable fallback text only at the presentation edge.
+- [x] Wire data-backed loading into the existing loop. (AC: 4, 5, 10, 11)
+  - [x] Keep `GameStateOrchestrator` as the mode-transition owner from Story 2.2.
+  - [x] Keep `HubStateOrchestrator` responsible for hub entry/run-start behavior from Story 2.1.
+  - [x] Load the configured room through `RoomStateOrchestrator` / `IRoomLoader` / `RoomLoaded` instead of presentation-only hardcoding.
+  - [x] Start the combat stub from the configured encounter/Souvenir data, but keep combat rules minimal.
+  - [x] Populate reward/resolution placeholder labels from data where practical; use readable fallback text only at the presentation edge.
 
-- [ ] Preserve architecture boundaries. (AC: 2, 3, 9, 10, 15)
-  - [ ] `Gameplay` may define DTOs, typed IDs, catalogs, orchestrators, and events.
-  - [ ] `Infrastructure` owns authoring conversion, validation, catalog construction, and persistence-facing loading.
-  - [ ] `Presentation` owns scene/UI binding only and reacts to gameplay state/events.
-  - [ ] Do not add UnityEngine references to Gameplay.
-  - [ ] Do not add Steam, Addressables, custom DI, full localization migration, or a generic content pipeline.
+- [x] Preserve architecture boundaries. (AC: 2, 3, 9, 10, 15)
+  - [x] `Gameplay` may define DTOs, typed IDs, catalogs, orchestrators, and events.
+  - [x] `Infrastructure` owns authoring conversion, validation, catalog construction, and persistence-facing loading.
+  - [x] `Presentation` owns scene/UI binding only and reacts to gameplay state/events.
+  - [x] Do not add UnityEngine references to Gameplay.
+  - [x] Do not add Steam, Addressables, custom DI, full localization migration, or a generic content pipeline.
 
-- [ ] Add tests. (AC: 12, 13, 14)
-  - [ ] Add/extend EditMode tests for valid conversion and deterministic catalog lookup.
-  - [ ] Add/extend EditMode tests for duplicate IDs.
-  - [ ] Add/extend EditMode tests for missing references.
-  - [ ] Add/extend EditMode tests for invalid reward currency/amount.
-  - [ ] Add/extend an integration or PlayMode smoke test proving the Story 2.2 loop still completes with data-backed room/encounter/reward content.
+- [x] Add tests. (AC: 12, 13, 14)
+  - [x] Add/extend EditMode tests for valid conversion and deterministic catalog lookup.
+  - [x] Add/extend EditMode tests for duplicate IDs.
+  - [x] Add/extend EditMode tests for missing references.
+  - [x] Add/extend EditMode tests for invalid reward currency/amount.
+  - [x] Add/extend an integration or PlayMode smoke test proving the Story 2.2 loop still completes with data-backed room/encounter/reward content.
 
 ## Dev Notes
 
@@ -149,11 +149,29 @@ so that the playable identity slice is not hardcoded.
 ## Dev Agent Record
 
 ### Agent Model Used
-
-TBD by dev agent
+gemini-2.5-flash
 
 ### Debug Log References
+- `[Content Validation Failed]` - Verified early fail closed loop in `GlobalBootstrapper`.
 
 ### Completion Notes List
+- Created `PlaceholderDataFixture` as an in-memory authoring set for the playable slice.
+- Extended `PlaceholderContentValidator` to check for invalid reward amounts and empty currency IDs.
+- Updated `GlobalBootstrapper` to execute content conversion and validation before EventBus initialization.
+- Added `ContentService` to `GlobalBootstrapper` to hold the initialized `PlaceholderContentCatalogs`.
+- Created `ExplorationBootstrapper`, `CombatBootstrapper`, `RewardBootstrapper`, and `ResolutionBootstrapper` to hook into the global content catalogs.
+- Populated UI text elements with placeholder data (e.g. `Reward.Amount`, `Reward.DisplayNameKey`) mapped via `UnityEngine.Localization.Components.LocalizeStringEvent`.
+- All EditMode and PlayMode tests passed, including `NavigateFullLoop_EndsAtHub`.
 
 ### File List
+- `Assets/Scripts/Infrastructure/Content/PlaceholderDataFixture.cs` (New)
+- `Assets/Scripts/Infrastructure/Content/Validation/PlaceholderContentValidator.cs` (Modified)
+- `Assets/Scripts/Gameplay/ContentService.cs` (Modified)
+- `Assets/Scripts/Presentation/GlobalBootstrapper.cs` (Modified)
+- `Assets/Scripts/Presentation/Hub/HubBootstrapper.cs` (Modified)
+- `Assets/Scripts/Gameplay/HubStateOrchestrator.cs` (Modified)
+- `Assets/Scripts/Presentation/Exploration/ExplorationBootstrapper.cs` (New)
+- `Assets/Scripts/Presentation/Combat/CombatBootstrapper.cs` (New)
+- `Assets/Scripts/Presentation/Reward/RewardBootstrapper.cs` (New)
+- `Assets/Scripts/Presentation/Resolution/ResolutionBootstrapper.cs` (New)
+- `Assets/Tests/EditMode/Content/PlaceholderContentPipelineTests.cs` (Modified)

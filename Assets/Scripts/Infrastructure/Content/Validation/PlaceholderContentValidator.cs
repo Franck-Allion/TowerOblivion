@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay.Content;
@@ -10,22 +11,32 @@ namespace TowerOblivion.Infrastructure.Content.Validation
         {
             if (catalogs == null)
             {
-                return Result.Failure("content.validation_failed", "Catalogs are required.");
+                return Result.Failure("content.null_catalogs", "Catalogs object is null.");
             }
 
             if (HasInvalidIds(catalogs))
             {
-                return Result.Failure("content.invalid_id", "Invalid (null or empty) content IDs detected.");
+                return Result.Failure("content.invalid_id", "Empty IDs detected in content.");
             }
 
-            if (HasDuplicates(catalogs))
+            if (HasDuplicateIds(catalogs))
             {
-                return Result.Failure("content.duplicate_id", "Duplicate content IDs detected.");
+                return Result.Failure("content.duplicate_id", "Duplicate IDs detected in content.");
             }
 
             if (HasMissingReferences(catalogs))
             {
-                return Result.Failure("content.missing_reference", "Missing required content references detected.");
+                return Result.Failure("content.missing_reference", "Missing required content references detected.");   
+            }
+
+            if (HasInvalidRewards(catalogs))
+            {
+                return Result.Failure("content.invalid_reward", "Invalid reward currency ID or amount detected.");     
+            }
+
+            if (HasInvalidNarrativeDefinitions(catalogs))
+            {
+                return Result.Failure("content.invalid_narrative", "Invalid narrative event flag or counter IDs detected.");
             }
 
             return Result.Success();
@@ -33,111 +44,85 @@ namespace TowerOblivion.Infrastructure.Content.Validation
 
         private static bool HasInvalidIds(PlaceholderContentCatalogs catalogs)
         {
-            return HasAnyInvalidId(catalogs.RoomDefinitions, definition => definition.Id.Value) ||
-                HasAnyInvalidId(catalogs.EncounterDefinitions, definition => definition.Id.Value) ||
-                HasAnyInvalidId(catalogs.SouvenirDefinitions, definition => definition.Id.Value) ||
-                HasAnyInvalidId(catalogs.RewardDefinitions, definition => definition.Id.Value) ||
-                HasAnyInvalidId(catalogs.NarrativeEventDefinitions, definition => definition.Id.Value) ||
-                HasAnyInvalidId(catalogs.ModifierDefinitions, definition => definition.Id.Value);
+            foreach (var d in catalogs.RoomDefinitions) if (string.IsNullOrEmpty(d.Id.Value)) return true;
+            foreach (var d in catalogs.EncounterDefinitions) if (string.IsNullOrEmpty(d.Id.Value)) return true;
+            foreach (var d in catalogs.SouvenirDefinitions) if (string.IsNullOrEmpty(d.Id.Value)) return true;
+            foreach (var d in catalogs.RewardDefinitions) if (string.IsNullOrEmpty(d.Id.Value)) return true;
+            foreach (var d in catalogs.NarrativeEventDefinitions) if (string.IsNullOrEmpty(d.Id.Value)) return true;
+            foreach (var d in catalogs.ModifierDefinitions) if (string.IsNullOrEmpty(d.Id.Value)) return true;
+            return false;
         }
 
-        private static bool HasDuplicates(PlaceholderContentCatalogs catalogs)
+        private static bool HasDuplicateIds(PlaceholderContentCatalogs catalogs)
         {
-            return HasDuplicateIds(catalogs.RoomDefinitions, definition => definition.Id.Value) ||
-                HasDuplicateIds(catalogs.EncounterDefinitions, definition => definition.Id.Value) ||
-                HasDuplicateIds(catalogs.SouvenirDefinitions, definition => definition.Id.Value) ||
-                HasDuplicateIds(catalogs.RewardDefinitions, definition => definition.Id.Value) ||
-                HasDuplicateIds(catalogs.NarrativeEventDefinitions, definition => definition.Id.Value) ||
-                HasDuplicateIds(catalogs.ModifierDefinitions, definition => definition.Id.Value);
+            if (HasDuplicateId(catalogs.RoomDefinitions, x => x.Id.Value)) return true;
+            if (HasDuplicateId(catalogs.EncounterDefinitions, x => x.Id.Value)) return true;
+            if (HasDuplicateId(catalogs.SouvenirDefinitions, x => x.Id.Value)) return true;
+            if (HasDuplicateId(catalogs.RewardDefinitions, x => x.Id.Value)) return true;
+            if (HasDuplicateId(catalogs.NarrativeEventDefinitions, x => x.Id.Value)) return true;
+            if (HasDuplicateId(catalogs.ModifierDefinitions, x => x.Id.Value)) return true;
+            return false;
+        }
+
+        private static bool HasDuplicateId<T>(IReadOnlyList<T> values, Func<T, string> idSelector)
+        {
+            var ids = new HashSet<string>();
+            foreach (var val in values)
+            {
+                var id = idSelector(val) ?? string.Empty;
+                if (!ids.Add(id)) return true;
+            }
+            return false;
         }
 
         private static bool HasMissingReferences(PlaceholderContentCatalogs catalogs)
         {
-            for (var i = 0; i < catalogs.RoomDefinitions.Count; i++)
+            foreach (var room in catalogs.RoomDefinitions)
             {
-                var room = catalogs.RoomDefinitions[i];
-                for (var j = 0; j < room.EncounterIds.Count; j++)
+                foreach (var encounterId in room.EncounterIds)
                 {
-                    if (!catalogs.Encounters.TryGet(room.EncounterIds[j], out _))
-                    {
-                        return true;
-                    }
+                    if (!catalogs.Encounters.TryGet(encounterId, out _)) return true;
                 }
-
-                for (var j = 0; j < room.NarrativeEventIds.Count; j++)
+                foreach (var narrativeId in room.NarrativeEventIds)
                 {
-                    if (!catalogs.NarrativeEvents.TryGet(room.NarrativeEventIds[j], out _))
-                    {
-                        return true;
-                    }
+                    if (!catalogs.NarrativeEvents.TryGet(narrativeId, out _)) return true;
                 }
             }
 
-            for (var i = 0; i < catalogs.EncounterDefinitions.Count; i++)
+            foreach (var encounter in catalogs.EncounterDefinitions)
             {
-                var encounter = catalogs.EncounterDefinitions[i];
-                for (var j = 0; j < encounter.SouvenirIds.Count; j++)
+                foreach (var souvenirId in encounter.SouvenirIds)
                 {
-                    if (!catalogs.Souvenirs.TryGet(encounter.SouvenirIds[j], out _))
-                    {
-                        return true;
-                    }
+                    if (!catalogs.Souvenirs.TryGet(souvenirId, out _)) return true;
                 }
-
-                for (var j = 0; j < encounter.RewardIds.Count; j++)
+                foreach (var rewardId in encounter.RewardIds)
                 {
-                    if (!catalogs.Rewards.TryGet(encounter.RewardIds[j], out _))
-                    {
-                        return true;
-                    }
+                    if (!catalogs.Rewards.TryGet(rewardId, out _)) return true;
                 }
-
-                for (var j = 0; j < encounter.ModifierIds.Count; j++)
+                foreach (var modifierId in encounter.ModifierIds)
                 {
-                    if (!catalogs.Modifiers.TryGet(encounter.ModifierIds[j], out _))
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            for (var i = 0; i < catalogs.RewardDefinitions.Count; i++)
-            {
-                var reward = catalogs.RewardDefinitions[i];
-                if (string.IsNullOrEmpty(reward.CurrencyId.Value))
-                {
-                    return true;
+                    if (!catalogs.Modifiers.TryGet(modifierId, out _)) return true;
                 }
             }
 
             return false;
         }
 
-        private static bool HasAnyInvalidId<TDefinition>(IReadOnlyList<TDefinition> values, System.Func<TDefinition, string> idSelector)
+        private static bool HasInvalidRewards(PlaceholderContentCatalogs catalogs)
         {
-            for (var i = 0; i < values.Count; i++)
+            foreach (var reward in catalogs.RewardDefinitions)
             {
-                if (string.IsNullOrEmpty(idSelector(values[i])))
-                {
-                    return true;
-                }
+                if (string.IsNullOrEmpty(reward.CurrencyId.Value) || reward.Amount < 0) return true;
             }
-
             return false;
         }
 
-        private static bool HasDuplicateIds<TDefinition>(IReadOnlyList<TDefinition> values, System.Func<TDefinition, string> idSelector)
+        private static bool HasInvalidNarrativeDefinitions(PlaceholderContentCatalogs catalogs)
         {
-            var ids = new HashSet<string>();
-            for (var i = 0; i < values.Count; i++)
+            foreach (var narrative in catalogs.NarrativeEventDefinitions)
             {
-                var id = idSelector(values[i]) ?? string.Empty;
-                if (!ids.Add(id))
-                {
-                    return true;
-                }
+                if (string.IsNullOrEmpty(narrative.RequiredFlagId.Value) && string.IsNullOrEmpty(narrative.RequiredCounterId.Value)) return true;
             }
-
             return false;
         }
     }

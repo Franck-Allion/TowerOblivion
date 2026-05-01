@@ -56,7 +56,8 @@ namespace TowerOblivion.Tests.EditMode.Content
         public void Validate_MissingReferences_ReturnsFailure()
         {
             var authoring = CreateValidAuthoringSet();
-            authoring.Encounters[0]._rewardIds = new[] { "reward.missing" };
+            var encounter = authoring.Encounters[0];
+            encounter.SetData(encounter.Id, encounter.DisplayNameKey, encounter.SouvenirIds, new[] { "reward.missing" }, encounter.ModifierIds);
 
             var converter = new PlaceholderContentConverter();
             var catalogs = converter.Convert(authoring);
@@ -85,6 +86,33 @@ namespace TowerOblivion.Tests.EditMode.Content
             Cleanup(authoring);
         }
 
+        [Test]
+        public void Validate_InvalidReward_ReturnsFailure()
+        {
+            var authoring = CreateValidAuthoringSet();
+            var reward = authoring.Rewards[0];
+            reward.SetData(reward.Id, reward.DisplayNameKey, reward.CurrencyId, -5); // Invalid amount
+
+            var converter = new PlaceholderContentConverter();
+            var catalogs = converter.Convert(authoring);
+            var validator = new PlaceholderContentValidator();
+
+            var result = validator.Validate(catalogs);
+
+            Assert.That(result.IsFailure, Is.True);
+            Assert.That(result.ErrorCode, Is.EqualTo("content.invalid_reward"));
+
+            // Test empty currency ID
+            reward.SetData(reward.Id, reward.DisplayNameKey, "", 10);
+            catalogs = converter.Convert(authoring);
+            
+            result = validator.Validate(catalogs);
+            Assert.That(result.IsFailure, Is.True);
+            Assert.That(result.ErrorCode, Is.EqualTo("content.invalid_reward"));
+
+            Cleanup(authoring);
+        }
+
         private static PlaceholderContentAuthoringSet CreateValidAuthoringSet()
         {
             return new PlaceholderContentAuthoringSet
@@ -101,58 +129,42 @@ namespace TowerOblivion.Tests.EditMode.Content
         private static RoomAuthoring CreateRoom(string id)
         {
             var room = ScriptableObject.CreateInstance<RoomAuthoring>();
-            room._id = id;
-            room._displayNameKey = id;
-            room._encounterIds = new[] { "encounter.entry" };
-            room._narrativeEventIds = new[] { "narrative.prometheus_whisper" };
+            room.SetData(id, id, new[] { "encounter.entry" }, new[] { "narrative.prometheus_whisper" });
             return room;
         }
 
         private static EncounterAuthoring CreateEncounter(string id)
         {
             var encounter = ScriptableObject.CreateInstance<EncounterAuthoring>();
-            encounter._id = id;
-            encounter._displayNameKey = id;
-            encounter._rewardIds = new[] { "reward.memory_embers" };
-            encounter._modifierIds = new[] { "modifier.divine_glow" };
-            encounter._souvenirIds = new[] { "souvenir.broken_laurel" };
+            encounter.SetData(id, id, new[] { "souvenir.broken_laurel" }, new[] { "reward.memory_embers" }, new[] { "modifier.divine_glow" });
             return encounter;
         }
 
         private static SouvenirAuthoring CreateSouvenir(string id, string displayKey)
         {
             var souvenir = ScriptableObject.CreateInstance<SouvenirAuthoring>();
-            souvenir._id = id;
-            souvenir._displayNameKey = displayKey;
-            souvenir._baseLife = 4;
+            souvenir.SetData(id, displayKey, 4);
             return souvenir;
         }
 
         private static RewardAuthoring CreateReward(string id)
         {
             var reward = ScriptableObject.CreateInstance<RewardAuthoring>();
-            reward._id = id;
-            reward._displayNameKey = id;
-            reward._currencyId = "currency.memory_embers";
-            reward._amount = 10;
+            reward.SetData(id, id, "currency.memory_embers", 10);
             return reward;
         }
 
         private static NarrativeEventAuthoring CreateNarrativeEvent(string id, string flagId)
         {
             var narrative = ScriptableObject.CreateInstance<NarrativeEventAuthoring>();
-            narrative._id = id;
-            narrative._displayNameKey = id;
-            narrative._requiredFlagId = flagId;
+            narrative.SetData(id, id, flagId, true, "counter.none", 0);
             return narrative;
         }
 
         private static ModifierAuthoring CreateModifier(string id)
         {
             var modifier = ScriptableObject.CreateInstance<ModifierAuthoring>();
-            modifier._id = id;
-            modifier._displayNameKey = id;
-            modifier._magnitude = 1;
+            modifier.SetData(id, id, 1);
             return modifier;
         }
 

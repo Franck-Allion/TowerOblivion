@@ -4,14 +4,18 @@ using UnityEngine.Localization.Settings;
 using TowerOblivion.Core;
 using TowerOblivion.Gameplay;
 using TowerOblivion.Gameplay.Persistence;
+using TowerOblivion.Gameplay.RunGeneration;
 using TowerOblivion.Infrastructure.Persistence;
+using TowerOblivion.Infrastructure.Content;
+using TowerOblivion.Infrastructure.Content.Conversion;
+using TowerOblivion.Infrastructure.Content.Validation;
 using TowerOblivion.Presentation.SceneFlow;
 
 namespace TowerOblivion.Presentation
 {
     /// <summary>
     /// Global composition root for presentation services.
-    /// Ensures core infrastructure (EventBus, Save, Orchestration) is available across scenes.
+    /// Ensures core infrastructure (EventBus, Save, Orchestration, Content) is available across scenes.
     /// </summary>
     [DefaultExecutionOrder(-100)]
     public sealed class GlobalBootstrapper : MonoBehaviour
@@ -41,7 +45,12 @@ namespace TowerOblivion.Presentation
         public IEventBus EventBus { get; private set; }
         public SaveService SaveService { get; private set; }
         public GameStateOrchestrator GameStateOrchestrator { get; private set; }
+        public ContentService ContentService { get; private set; }
         public ContentVersion ContentVersion { get; private set; } = new("content.0.1.0");
+        public RunState ActiveRun { get; private set; }
+
+        [Header("Content Authoring")]
+        [SerializeField] private PlaceholderContentAuthoringSet _authoringSet;
 
         private void Awake()
         {
@@ -59,22 +68,54 @@ namespace TowerOblivion.Presentation
 
         private void InitializeGlobalState()
         {
-            // AAA standard: Ensure localization is fully initialized
-            LocalizationSettings.InitializationOperation.WaitForCompletion();
+            try
+            {
+                // AAA standard: Ensure localization is fully initialized
+                LocalizationSettings.InitializationOperation.WaitForCompletion();
 
-            // 1. Core Services
-            EventBus = new SimpleEventBus();
-            GameStateOrchestrator = new GameStateOrchestrator(EventBus);
+                // 1. Content Bootstrapping & Validation
+                var authoringSet = _authoringSet != null ? _authoringSet : PlaceholderDataFixture.Create();
+                var converter = new PlaceholderContentConverter();
+                var catalogs = converter.Convert(authoringSet);
 
-            // 2. Infrastructure
-            var savePath = Application.persistentDataPath;
-            var validator = new SaveDataValidator(ContentVersion);
-            var repository = new JsonSaveRepository(savePath, validator);
-            SaveService = new SaveService(repository);
+                var validator = new PlaceholderContentValidator();
+                var validationResult = validator.Validate(catalogs);
 
-            // 3. Global Presenters
-            var presenter = gameObject.AddComponent<GameStateOrchestratorPresenter>();
-            presenter.Bind(EventBus);
+                if (validationResult.IsFailure)
+                {
+                    Debug.LogError($"[Content Validation Failed] {validationResult.ErrorCode}: {validationResult.ErrorMessage}");
+                    FailClosed();
+                    return;
+                }
+
+                ContentService = new ContentService(catalogs);
+
+                // 2. Core Services
+                EventBus = new SimpleEventBus();
+                GameStateOrchestrator = new GameStateOrchestrator(EventBus);
+                EventBus.Subscribe<RunStarted>(evt => ActiveRun = evt.InitialState);
+
+                // 3. Infrastructure
+                var savePath = Application.persistentDataPath;
+                var saveDataValidator = new SaveDataValidator(ContentVersion);
+                var repository = new JsonSaveRepository(savePath, saveDataValidator);
+                SaveService = new SaveService(repository);
+
+                // 4. Global Presenters
+                var presenter = gameObject.AddComponent<GameStateOrchestratorPresenter>();
+                presenter.Bind(EventBus);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                FailClosed();
+            }
+        }
+
+        private void FailClosed()
+        {
+            if (_instance == this) _instance = null;
+            Destroy(gameObject);
         }
     }
 }

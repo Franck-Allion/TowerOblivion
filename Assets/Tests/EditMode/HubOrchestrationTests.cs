@@ -42,7 +42,7 @@ namespace TowerOblivion.Tests.EditMode
             Assert.That(runState.RunId, Is.EqualTo(runId));
             Assert.That(runState.Seed, Is.EqualTo(seed));
             Assert.That(runState.ContentVersion, Is.EqualTo(_version));
-            Assert.That(runState.ActiveRoomId.Value, Is.EqualTo("room.1"));
+            Assert.That(runState.ActiveRoomId.Value, Is.EqualTo("room.entry"));
 
             Assert.That(_eventBus.PublishedEvents, Has.Count.EqualTo(1));
             Assert.That(_eventBus.PublishedEvents[0], Is.InstanceOf<RunStarted>());

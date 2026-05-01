@@ -1,12 +1,14 @@
+using TowerOblivion.Gameplay.Content;
+
 namespace TowerOblivion.Gameplay
 {
     public sealed class ContentService
     {
-        public IRoomLoader RoomLoader { get; }
+        public PlaceholderContentCatalogs Catalogs { get; }
 
-        public ContentService(IRoomLoader roomLoader)
+        public ContentService(PlaceholderContentCatalogs catalogs)
         {
-            RoomLoader = roomLoader;
+            Catalogs = catalogs;
         }
     }
 }

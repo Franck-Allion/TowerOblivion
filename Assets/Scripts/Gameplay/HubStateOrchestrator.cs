@@ -29,7 +29,7 @@ namespace TowerOblivion.Gameplay
                 Seed = seed,
                 ContentVersion = _contentVersion,
                 CurrentFloorIndex = 0,
-                ActiveRoomId = new RoomId("room.1") // First exploration room
+                ActiveRoomId = new RoomId("room.entry") // First exploration room
             };
 
             // Fact: The run has started
