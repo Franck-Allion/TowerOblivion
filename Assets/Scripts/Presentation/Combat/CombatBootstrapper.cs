@@ -25,6 +25,12 @@ namespace TowerOblivion.Presentation.Combat
                 return;
             }
 
+            var presenter = GetComponent<CombatPresenter>();
+            if (presenter != null)
+            {
+                presenter.Initialize(global.EventBus, global.ContentService.Catalogs.Encounters);
+            }
+
             // For the stub, get the current room and its first encounter
             if (!global.ContentService.Catalogs.Rooms.TryGet(global.ActiveRun.ActiveRoomId, out var roomDef) || roomDef.EncounterIds.Count == 0)
             {

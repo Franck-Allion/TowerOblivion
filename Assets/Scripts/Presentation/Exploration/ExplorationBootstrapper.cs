@@ -23,6 +23,12 @@ namespace TowerOblivion.Presentation.Exploration
                 return;
             }
 
+            var presenter = GetComponent<TowerOblivion.Presentation.RoomView.RoomPresenter>();
+            if (presenter != null)
+            {
+                presenter.Initialize(global.EventBus);
+            }
+
             _roomOrchestrator = new RoomStateOrchestrator(global.ActiveRun, global.EventBus, global.ContentService.Catalogs.Rooms);
             var result = _roomOrchestrator.LoadRoom(global.ActiveRun.ActiveRoomId);
 
